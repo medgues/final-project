@@ -6,9 +6,8 @@ const ProductSchema = new Schema(
     title: {
       type: String,
       required: true,
-      unique: true,
     },
-    description: {
+    postedBy: {
       type: String,
       required: true,
     },

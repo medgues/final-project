@@ -1,49 +1,35 @@
 import React, { useContext, useEffect, useState } from "react";
 import Header from "./header";
-import Product from "./product";
-import axios from "axios";
-import { useStateValue } from "./stateProvider";
-import { Link, useNavigate } from "react-router-dom";
+import Product from "./components/product";
+import { ProductsContext } from "./contexts/ProductsContext";
+import useProducts from "./hooks/useProducts";
 import { Auth } from "./contexts/Auth";
 
 const Home = () => {
-  const nav = useNavigate();
+  const { fetchData } = useProducts();
   const { user } = useContext(Auth);
+  const [state, dispatch] = useContext(ProductsContext);
   useEffect(() => {
-    console.log("user", user);
-    if (!user) {
-      nav("/login");
-    }
+    const url = "/api/products";
+    const method = "get";
+    fetchData({ url, method, user });
   }, []);
-  // const { user } = useStateValue();
-  // const [products, setProducts] = useState([]);
-  // useEffect(() => {
-  //     axios
-  //         .get("http://localhost:5000/products")
-  //         .then((res) => {
-  //             setProducts(res.data);
-  //         })
-  //         .catch((err) => {
-  //             console.log(err);
-  //         });
-  // }, []);
   return (
     <div className=" min-h-screen  bg-slate-300">
       <Header />
 
       <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center sm:justify-center">
-        {/* map products with product cards */}
-        {/* {products.map((product) => (
-                    <Product
-                        key={product.id}
-                        id={product.id}
-                        title={product.title}
-                        image={product.image}
-                        price={product.amount}
-                        rating={product.rating}
-                    />
-                ))} */}
-        welcome to home
+        {state.products.map((product) => (
+          <Product
+            key={product._id}
+            id={product._id}
+            title={product.title}
+            image={product.img}
+            postedBy={product.postedBy}
+            // price={product.amount}
+            // rating={product.rating}
+          />
+        ))}
       </div>
     </div>
   );

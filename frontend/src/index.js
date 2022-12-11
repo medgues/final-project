@@ -5,14 +5,15 @@ import App from "./App";
 import { StateProvider } from "./stateProvider";
 import reducer, { initialState } from "./reducer";
 import { AuthProvider } from "./contexts/Auth";
+import { ProductContextProvider } from "./contexts/ProductsContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
+  <ProductContextProvider>
     <AuthProvider>
       <StateProvider reducer={reducer} initialState={initialState}>
         <App />
       </StateProvider>
     </AuthProvider>
-  </React.StrictMode>
+  </ProductContextProvider>
 );

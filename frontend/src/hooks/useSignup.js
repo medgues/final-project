@@ -16,10 +16,10 @@ export const useSignupn = () => {
 
     try {
       await axios.post("/api/user/signup", user).then((res) => {
-        console.log(res, "res");
+        console.log(res, "res, signup");
 
         if (res.statusText === "OK") {
-          console.log(res, "res");
+          console.log(res, "res, signup");
           localStorage.setItem("user", JSON.stringify(res.data));
           dispatch({ type: "SIGNUP", payload: res });
           Navigate("/");

@@ -9,6 +9,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useStateValue } from "./stateProvider";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import Products from "./pages/Products";
+import UserPage from "./pages/UserPage";
+import CreateProduct from "./pages/CreateProduct";
+import ProfilePage from "./pages/ProfilePage";
+import EditProduct from "./pages/EditProduct";
 
 function App() {
   return (
@@ -18,9 +23,12 @@ function App() {
         <Route exact path="/" element={<Home />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/Signup" element={<Signup />}></Route>
-        <Route path="/product/:id" element={<ProductDescription />} />{" "}
+        <Route path="/:username" element={<UserPage />} />{" "}
+        <Route path="/createproduct" element={<CreateProduct />} />{" "}
+        <Route path="/profile/:username" element={<ProfilePage />} />{" "}
+        <Route path="/product/edit/:id" element={<EditProduct />} />{" "}
         {/* :id is a placeholder for the id of the product */}
-        <Route path="/checkout" element={<Checkout />} />
+        {/* <Route path="/checkout" element={<Checkout />} /> */}
       </Routes>
     </Router>
   );

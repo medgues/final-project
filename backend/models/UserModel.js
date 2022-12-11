@@ -11,6 +11,11 @@ const UserSchema = new Schema(
       required: true,
       unique: true,
     },
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     password: {
       type: String,
       required: true,
@@ -23,7 +28,7 @@ const UserSchema = new Schema(
   { timestamps: true }
 );
 
-UserSchema.statics.signup = async function (email, password) {
+UserSchema.statics.signup = async function (email, password, role, username) {
   // validate email
   if (!validator.isEmail(email)) {
     throw Error("email must be valid");
@@ -36,11 +41,15 @@ UserSchema.statics.signup = async function (email, password) {
   if (emailExists) {
     throw Error("email alrady exsists");
   }
+  const usernameExsists = await this.findOne({ username });
+  if (usernameExsists) {
+    throw Error("username alrady exsists");
+  }
   //salt
   const salt = await bcrypt.genSalt(12);
   //hashed password
   const hashedPassword = await bcrypt.hash(password, salt);
-  const user = await this.create({ email, password: hashedPassword });
+  const user = await this.create({ email, username, password: hashedPassword });
   return user;
 };
 UserSchema.statics.login = async function (email, password) {

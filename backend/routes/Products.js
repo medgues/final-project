@@ -1,16 +1,18 @@
 const express = require("express");
 const {
-  login,
-  signup,
   getProducts,
   createProduct,
+  deleteProduct,
 } = require("../controllers/ProductsControllers");
+const checkAuth = require("../middleware/AuthMiddleware");
+
 const router = express.Router();
 // get all products Router
 router.get("/", getProducts);
-router.post("/", createProduct);
+//check authorisation
+router.use(checkAuth);
 
-//singup route
-// router.post("/signup", signup);
+router.post("/", createProduct);
+router.delete("/:id", deleteProduct);
 
 module.exports = router;
