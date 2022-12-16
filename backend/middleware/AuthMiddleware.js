@@ -4,6 +4,8 @@ const User = require("../models/UserModel");
 
 const checkAuth = async (req, res, next) => {
   const authorization = req.headers.authorization;
+  console.log("authorization", authorization);
+  console.log("headers", req.headers);
   if (!authorization) {
     return res.status(400).json({ err: "authorization headers missing!" });
   }
@@ -12,11 +14,9 @@ const checkAuth = async (req, res, next) => {
   try {
     const user = await UserModel.findById({ _id }).select("username");
     req.user = user;
-    console.log("username", user);
     next();
   } catch (error) {
     console.log(error);
   }
-  next();
 };
 module.exports = checkAuth;

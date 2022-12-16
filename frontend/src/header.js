@@ -13,11 +13,9 @@ function Header() {
   const { logOut } = useLogout();
 
   const navigate = useNavigate();
-  const [{ products }, dispatch] = useContext(ProductsContext);
 
   const handelUserClick = (username) => {
-    dispatch({ type: "USER_PRODUCTS", username });
-    navigate(`/profile/${username}`);
+    navigate(`/${username}`);
   };
 
   const handleLogout = () => {
@@ -25,7 +23,7 @@ function Header() {
   };
 
   return (
-    <header className=" bg-blue-400 z-10 top-0 sticky">
+    <header className=" bg-blue-400 z-10 top-0 sticky ">
       <div className="navbar bg-base-100">
         <div className="flex-1">
           <Link to={"/"} className="btn btn-ghost normal-case text-xl">

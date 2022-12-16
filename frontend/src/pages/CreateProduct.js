@@ -8,19 +8,19 @@ import Header from "../header";
 import { useFetch } from "../hooks/useFetch";
 
 const CreateProduct = () => {
-  // const navigate = useNavigate();
-  // const { user } = useContext(Auth);
-  // console.log("usre from creatproduct", user);
-  // useEffect(() => {
-  //   if (!user) {
-  //     navigate("/login");
-  //   }
-  // }, []);
+  const navigate = useNavigate();
+  const { user } = useContext(Auth);
+  console.log("usre from creatproduct", user);
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, []);
   return (
     <div className=" min-h-screen  bg-slate-300">
       <Header />
-      <AddProductForm />
       <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center sm:justify-center">
+        <AddProductForm />
         {/* {userProducts.map((product) => (
           <Product
             key={product._id}

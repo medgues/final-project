@@ -23,9 +23,9 @@ function App() {
         <Route exact path="/" element={<Home />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/Signup" element={<Signup />}></Route>
-        <Route path="/:username" element={<UserPage />} />{" "}
+        <Route path="/profile/:username" element={<UserPage />} />{" "}
         <Route path="/createproduct" element={<CreateProduct />} />{" "}
-        <Route path="/profile/:username" element={<ProfilePage />} />{" "}
+        <Route path="/:username" element={<ProfilePage />} />{" "}
         <Route path="/product/edit/:id" element={<EditProduct />} />{" "}
         {/* :id is a placeholder for the id of the product */}
         {/* <Route path="/checkout" element={<Checkout />} /> */}

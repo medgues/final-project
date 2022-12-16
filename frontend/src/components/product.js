@@ -6,23 +6,27 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { ProductsContext } from "../contexts/ProductsContext";
 import { Auth } from "../contexts/Auth";
+import { useFetch } from "../hooks/useFetch";
 
-function Product({ id, title, image, price, rating, postedBy }) {
+const Product = ({
+  handelPopUpOpen,
+  id,
+  title,
+  image,
+  price,
+  rating,
+  postedBy,
+}) => {
   const navigate = useNavigate();
   const { user } = useContext(Auth);
   const { pathname } = useLocation();
 
-  const [{ products }, dispatch] = useContext(ProductsContext);
+  const { dispatch } = useContext(ProductsContext);
   const handelUserClick = (username) => {
-    dispatch({ type: "USER_PRODUCTS", username });
-    navigate(`/${username}`);
+    navigate(`/profile/${username}`);
   };
   const handelEditProductClick = (id) => {
-    dispatch({ type: "SET_PRODUCT", id });
     navigate(`/product/edit/${id}`);
-  };
-  const handelDeletDesign = (id) => {
-    console.log("id", id);
   };
 
   // const [{ user }, dispatch] = useStateValue();
@@ -41,18 +45,22 @@ function Product({ id, title, image, price, rating, postedBy }) {
   };
   // PRODUCT CARD - displays product details on home/products page
   return (
-    <div className="relative hover:cursor-pointer flex flex-col items-center h-96 sm:w-1/5 w-1/2 bg-white m-2 rounded-md">
+    <div className="relative hover:cursor-pointer bg-white rounded-md">
       <img
         src={image}
         alt=""
-        className=" w-full h-70 object-cover overflow-hidden"
+        className=" w-full h-70 object-cover overflow-hidden rounded-t-md"
         onClick={() => navigate(`/product/${id - 1}`)}
       />
       {pathname !== "/" && user.username === postedBy && (
-        <div class="tooltip absolute right-1 top-1 z-10 " data-tip="delete">
-          <a href="#my-modal-2" className=" text-white ">
+        <div
+          className="tooltip absolute right-1 top-1 tooltip-left "
+          data-tip="delete"
+        >
+          <a className=" text-white ">
             <FontAwesomeIcon
-              href="#my-modal-2"
+              onClick={() => handelPopUpOpen({ postedBy, image, title, id })}
+              // href="#my-modal-2"
               className=" bg-slate-800  p-1 rounded"
               icon={solid("x")}
             />
@@ -132,30 +140,8 @@ function Product({ id, title, image, price, rating, postedBy }) {
           </button>
         )}
       </div>
-
-      <div>
-        <div className="modal" id="my-modal-2">
-          <div className="modal-box">
-            <h3 className="font-bold text-lg">
-              You are trying to delete a designe perminantly !
-            </h3>
-            <p className="py-4">
-              this action will delet your design completely, are you sure i want
-              to procced
-            </p>
-            <div className="modal-action">
-              <a href="#" className="btn" onClick={() => handelDeletDesign(id)}>
-                delete
-              </a>
-              <a href="#" className="btn">
-                No
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
-}
+};
 
 export default Product;

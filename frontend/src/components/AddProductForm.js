@@ -1,21 +1,24 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useFetch } from "../hooks/useFetch";
 
 const AddProductForm = () => {
   const [title, setTitle] = useState("");
   const [img, setImg] = useState("");
   const { fetch } = useFetch();
+  const navigate = useNavigate();
 
   const handelSubmit = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     const product = { title, img, postedBy: user.username };
     const url = "/api/products/";
     fetch({ url, data: product, method: "post", user });
+    navigate(`/${user.username}`);
   };
 
   return (
-    <div className="  hover:cursor-pointer flex flex-col items-center h-96 sm:w-1/5 w-1/2 bg-white m-2 rounded-md">
-      <div className="w-1/3 p-4 mt-20 max-w-sm h-full bg-white rounded-lg border border-gray-200 shadow-md sm:p-6 lg:p-8">
+    <div className="  hover:cursor-pointer flex flex-col justify-center items-center h-96 sm:w-1/3 w-4/5 bg-white m-2 rounded-md">
+      <div className="w-4/5 p-4 my-2 max-w-sm h-full bg-white rounded-lg border border-gray-200 shadow-md sm:p-6 lg:p-8">
         {/* <div> {error && <p className="text-rose-600">{error}</p>}</div> */}
         <div className="space-y-6" action="#">
           <h5 className="text-xl font-medium text-gray-900 ">add new Design</h5>
