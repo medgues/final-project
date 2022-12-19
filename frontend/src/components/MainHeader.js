@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import { useStateValue } from "./stateProvider";
+import { useStateValue } from "../stateProvider";
 import { useNavigate, Link } from "react-router-dom";
-import { useLogout } from "./hooks/useLogout";
-import { Auth } from "./contexts/Auth";
-import { ProductsContext } from "./contexts/ProductsContext";
+import { useLogout } from "../hooks/useLogout";
+import { Auth } from "../contexts/Auth";
+import { ProductsContext } from "../contexts/ProductsContext";
 
-function Header() {
+function MainHeader() {
   // const [{ user, basket }, dispatch] = useStateValue();
   // const user = JSON.parse(localStorage.getItem("user"));
   const { user } = useContext(Auth);
@@ -23,7 +23,7 @@ function Header() {
   };
 
   return (
-    <header className=" bg-blue-400 z-10 top-0 sticky ">
+    <header className=" bg-blue-400 header">
       <div className="navbar bg-base-100">
         <div className="flex-1">
           <Link to={"/"} className="btn btn-ghost normal-case text-xl">
@@ -32,12 +32,12 @@ function Header() {
           {/* <a>POD</a> */}
         </div>
         {!user && (
-          <div className="btn-group">
+          <div className="btn-group gap-1">
             <Link to={"/login"}>
-              <button className="btn">login</button>
+              <button className="btn btn-secondary btn-xs m-x1">login</button>
             </Link>
             <Link to={"/signup"}>
-              <button className="btn">Signup</button>
+              <button className="btn btn-primary btn-xs m-x1">Signup</button>
             </Link>
           </div>
         )}
@@ -177,4 +177,4 @@ function Header() {
 // </div>
 // </div> */}
 
-export default Header;
+export default MainHeader;

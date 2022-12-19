@@ -47,6 +47,18 @@ export const useFetch = () => {
         return res;
       }
     }
+    if (method === "getUserProducts") {
+      console.log("user token", user);
+      try {
+        const res = await axios.get(url);
+        console.log("fetch res", res);
+        return res;
+      } catch (err) {
+        const res = err;
+        console.log("fetch res", res);
+        return res;
+      }
+    }
     if (method === "getProduct") {
       console.log("user token", user);
       try {
@@ -88,7 +100,7 @@ export const useFetch = () => {
         });
         return res;
       } catch (err) {
-        console.log("delete error with user", err);
+        console.log("patch error with user", err);
         const res = err;
         return res;
       }

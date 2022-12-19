@@ -1,31 +1,30 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import AddProductForm from "../components/AddProductForm";
 import PopupModel from "../components/PopupModel";
-import Product from "../components/product";
 import { ProductsContext } from "../contexts/ProductsContext";
-import Header from "../header";
 import useProducts from "../hooks/useProducts";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
-import { useFetch } from "../hooks/useFetch";
+import MainHeader from "../components/MainHeader";
+import ProductsGrid from "../components/Grid";
 
 const ProfilePage = () => {
+  const [data, setData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [product, setProduct] = useState({});
   const { username } = useParams();
-  const { userProducts, dispatch } = useContext(ProductsContext);
-  const { fetch } = useFetch();
+  const { products } = useContext(ProductsContext);
+  const { fetchData } = useProducts();
+  // const { user } = useContext(Auth);
   const user = JSON.parse(localStorage.getItem("user"));
-  const url = `/api/products/${username}`;
-  const method = "getProfile";
-
-  const getuserProducts = async () => {
-    const res = await fetch({ url, method, user, data: {} });
-    dispatch({ type: "USER_PRODUCTS", payload: res.data });
-  };
-
   useEffect(() => {
-    getuserProducts();
+    setData(products);
+  }, [products]);
+  const disactivateToggleIsTrue = user.username === username;
+  console.log(disactivateToggleIsTrue);
+  useEffect(() => {
+    const url = `/api/products/${username}`;
+    const method = "getProfile";
+    fetchData({ url, method, user, data: {} });
   }, []);
 
   const handelPopUpOpen = ({ postedBy, image, title, id }) => {
@@ -35,11 +34,16 @@ const ProfilePage = () => {
 
   return (
     <div className=" min-h-screen  bg-slate-300">
-      <Header />
+      <MainHeader />
       <div className="w-11/12  mx-auto my-1">
-        <ResponsiveMasonry columnsCountBreakPoints={{ 350: 2, 750: 4, 900: 5 }}>
+        <ProductsGrid
+          data={data}
+          disactivateToggleIsTrue={disactivateToggleIsTrue}
+          handelPopUpOpen={handelPopUpOpen}
+        />
+        {/* <ResponsiveMasonry columnsCountBreakPoints={{ 350: 2, 750: 4, 900: 5 }}>
           <Masonry gutter="10px">
-            {userProducts.map((product) => (
+            {data.map((product) => (
               <Product
                 handelPopUpOpen={handelPopUpOpen}
                 key={product._id}
@@ -52,7 +56,7 @@ const ProfilePage = () => {
               />
             ))}
           </Masonry>
-        </ResponsiveMasonry>
+        </ResponsiveMasonry> */}
       </div>
 
       <PopupModel

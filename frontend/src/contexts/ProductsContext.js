@@ -1,9 +1,13 @@
 import { Axios } from "axios";
 import React, { useEffect, useReducer, useState, createContext } from "react";
 import { useFetch } from "../hooks/useFetch";
+import gradients from "../gradients";
 
 export const ProductsContext = createContext();
-
+function randomNumberInRange(min, max) {
+  // 👇️ get number between min (inclusive) and max (inclusive)
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 //reducer
 const ProductsReducer = (state, action) => {
   console.log("state", state);
@@ -12,13 +16,18 @@ const ProductsReducer = (state, action) => {
       localStorage.setItem("posts", JSON.stringify(action.payload));
       return {
         ...state,
-        products: action.payload,
+        products: action.payload.map((product) => {
+          const css = gradients[randomNumberInRange(0, 13)].css;
+          return { ...product, css };
+        }),
       };
     case "USER_PRODUCTS": {
-      console.log("action", action);
       return {
         ...state,
-        userProducts: action.payload,
+        userProducts: action.payload.map((product) => [
+          ...product,
+          gradients[randomNumberInRange(0, 14)],
+        ]),
       };
     }
     case "SET_PRODUCT":
@@ -45,7 +54,7 @@ export const ProductContextProvider = ({ children }) => {
 
   return (
     <ProductsContext.Provider value={{ ...state, dispatch }}>
-      {console.log("done")}
+      {console.log("done", state)}
       {children}
     </ProductsContext.Provider>
   );

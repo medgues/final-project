@@ -12,6 +12,7 @@ const checkAuth = require("../middleware/AuthMiddleware");
 const router = express.Router();
 // get all products Router
 router.get("/", getProducts);
+router.get("/profile/:username", getUserProducts);
 //check authorisation
 router.use(checkAuth);
 

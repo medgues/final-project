@@ -4,8 +4,9 @@ import AddProductForm from "../components/AddProductForm";
 import EditProductForm from "../components/EditProductForm";
 import Product from "../components/product";
 import { ProductsContext } from "../contexts/ProductsContext";
-import Header from "../header";
+import Header from "../components/MainHeader";
 import { useFetch } from "../hooks/useFetch";
+import MainHeader from "../components/MainHeader";
 
 const EditProduct = () => {
   const [isloading, setIsloading] = useState(false);
@@ -30,7 +31,7 @@ const EditProduct = () => {
 
   return (
     <div className=" h-auto   bg-slate-300">
-      <Header />
+      <MainHeader />
       <div className=" flex h-screen items-center justify-center">
         <EditProductForm />
         <div className="w-1/6 mx-4">

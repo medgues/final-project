@@ -1,15 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import AddProductForm from "../components/AddProductForm";
-import Product from "../components/product";
-import { Auth } from "../contexts/Auth";
-import { ProductsContext } from "../contexts/ProductsContext";
-import Header from "../header";
-import { useFetch } from "../hooks/useFetch";
+import MainHeader from "../components/MainHeader";
 
 const CreateProduct = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
-  const { user } = useContext(Auth);
+  // const { user } = useContext(Auth);
   console.log("usre from creatproduct", user);
   useEffect(() => {
     if (!user) {
@@ -18,9 +15,9 @@ const CreateProduct = () => {
   }, []);
   return (
     <div className=" min-h-screen  bg-slate-300">
-      <Header />
+      <MainHeader />
+      <AddProductForm />
       <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center sm:justify-center">
-        <AddProductForm />
         {/* {userProducts.map((product) => (
           <Product
             key={product._id}

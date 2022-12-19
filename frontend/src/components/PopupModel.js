@@ -2,11 +2,13 @@ import React, { useContext } from "react";
 import { Auth } from "../contexts/Auth";
 import { ProductsContext } from "../contexts/ProductsContext";
 import { useFetch } from "../hooks/useFetch";
+import useProducts from "../hooks/useProducts";
 
 export default function PopupModel({ product, showModal, setShowModal }) {
   const { fetch } = useFetch();
   const { user } = useContext(Auth);
-  const { dispatch } = useContext(ProductsContext);
+  const { fetchData } = useProducts();
+
   const handelDeletDesign = async () => {
     await fetch({
       url: `api/products/${product.id}`,
@@ -14,9 +16,9 @@ export default function PopupModel({ product, showModal, setShowModal }) {
       user,
     });
     //fetch and update global state with new list without the deleted product
-    const { data } = await fetch({ url: `api/products/`, method: "get", user });
-    //dispatch the new list to update all products list
-    dispatch({ type: "ALL_PRODUCTS", payload: data });
+    const url = `/api/products/${user.username}`;
+    const method = "getProfile";
+    fetchData({ url, method, user, data: {} });
     setShowModal(false);
   };
   return (

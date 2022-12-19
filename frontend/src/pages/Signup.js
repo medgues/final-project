@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import Header from "../header";
+import Header from "../components/MainHeader";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useStateValue } from "../stateProvider";
 import { useSignupn } from "../hooks/useSignup";
+import MainHeader from "../components/MainHeader";
 
 const Signup = () => {
   const [email, setEamil] = useState("");
@@ -77,7 +78,7 @@ const Signup = () => {
 
   return (
     <div className="h-screen  bg-slate-300">
-      <Header />
+      <MainHeader />
       <div className=" flex items-center justify-center">
         <div className="w-2/3 p-4 mt-20 max-w-sm h-full bg-white rounded-lg border border-gray-200 shadow-md sm:p-6 lg:p-8">
           <div> {error && <p className="text-rose-600">{error}</p>}</div>

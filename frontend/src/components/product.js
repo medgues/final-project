@@ -7,8 +7,12 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { ProductsContext } from "../contexts/ProductsContext";
 import { Auth } from "../contexts/Auth";
 import { useFetch } from "../hooks/useFetch";
+import design from "../components/productPage/assets/img/react.png";
 
 const Product = ({
+  disactivateToggleIsTrue,
+  createdAt,
+  toggle,
   handelPopUpOpen,
   id,
   title,
@@ -28,9 +32,11 @@ const Product = ({
   const handelEditProductClick = (id) => {
     navigate(`/product/edit/${id}`);
   };
+  const todayDate = Math.floor(new Date().getTime()) / 1000;
+  const date = new Date(createdAt).getTime() / 1000;
 
-  // const [{ user }, dispatch] = useStateValue();
-
+  const newest = todayDate - date <= 604800;
+  console.log(todayDate, date, newest);
   const addToBasket = () => {
     dispatch({
       type: "ADD_TO_BASKET",
@@ -45,27 +51,41 @@ const Product = ({
   };
   // PRODUCT CARD - displays product details on home/products page
   return (
-    <div className="relative hover:cursor-pointer bg-white rounded-md">
+    <div
+      className="relative hover:cursor-pointer"
+      onClick={disactivateToggleIsTrue ? undefined : toggle}
+    >
+      {newest ? (
+        <div className="badge badge-secondary absolute top-0 left-0 mt-1 ml-1">
+          New
+        </div>
+      ) : (
+        <div></div>
+      )}
+      <img src={design} alt="" className="absolute scale-40 top-[13%]" />
       <img
         src={image}
         alt=""
         className=" w-full h-70 object-cover overflow-hidden rounded-t-md"
-        onClick={() => navigate(`/product/${id - 1}`)}
       />
-      {pathname !== "/" && user.username === postedBy && (
-        <div
-          className="tooltip absolute right-1 top-1 tooltip-left "
-          data-tip="delete"
-        >
-          <a className=" text-white ">
-            <FontAwesomeIcon
-              onClick={() => handelPopUpOpen({ postedBy, image, title, id })}
-              // href="#my-modal-2"
-              className=" bg-slate-800  p-1 rounded"
-              icon={solid("x")}
-            />
-          </a>
-        </div>
+      {user ? (
+        pathname !== "/" &&
+        user.username === postedBy && (
+          <div
+            className="tooltip absolute right-1 top-1 tooltip-left "
+            data-tip="delete"
+          >
+            <a className=" text-white ">
+              <FontAwesomeIcon
+                onClick={() => handelPopUpOpen({ postedBy, image, title, id })}
+                className=" bg-slate-800  p-1 rounded"
+                icon={solid("x")}
+              />
+            </a>
+          </div>
+        )
+      ) : (
+        <div></div>
       )}
 
       <div className="flex w-full  justify-start">
@@ -110,34 +130,43 @@ const Product = ({
             />
           </svg>
         </button>
-        {pathname !== "/" && user.username === postedBy && (
-          <p className="flex gap-1 items-center">
-            edit{" "}
-            <FontAwesomeIcon
-              className="p-1"
-              onClick={() => handelEditProductClick(id)}
-              icon={solid("pen-to-square")}
-            />
-          </p>
+        {user ? (
+          pathname !== "/" &&
+          user.username === postedBy && (
+            <p className="flex gap-1 items-center">
+              edit{" "}
+              <FontAwesomeIcon
+                className="p-1"
+                onClick={() => handelEditProductClick(id)}
+                icon={solid("pen-to-square")}
+              />
+            </p>
+          )
+        ) : (
+          <></>
         )}
 
-        {pathname === "/" && (
-          <button onClick={addToBasket} className="">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-              />
-            </svg>
-          </button>
+        {user ? (
+          pathname === "/" && (
+            <button onClick={addToBasket} className="">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                />
+              </svg>
+            </button>
+          )
+        ) : (
+          <></>
         )}
       </div>
     </div>
