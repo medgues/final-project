@@ -6,16 +6,21 @@ const { default: isEmail } = require("validator/lib/isEmail");
 
 const UserSchema = new Schema(
   {
-    email: {
+    fullname: {
       type: String,
       required: true,
-      unique: true,
     },
     username: {
       type: String,
       required: true,
       unique: true,
     },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+
     password: {
       type: String,
       required: true,
@@ -24,11 +29,24 @@ const UserSchema = new Schema(
       type: String,
       require: true,
     },
+
+    likes: [
+      {
+        userID: String,
+        productID: String,
+      },
+    ],
   },
   { timestamps: true }
 );
 
-UserSchema.statics.signup = async function (email, password, role, username) {
+UserSchema.statics.signup = async function (
+  fullname,
+  username,
+  email,
+  password,
+  role
+) {
   // validate email
   if (!validator.isEmail(email)) {
     throw Error("email must be valid");
@@ -49,7 +67,13 @@ UserSchema.statics.signup = async function (email, password, role, username) {
   const salt = await bcrypt.genSalt(12);
   //hashed password
   const hashedPassword = await bcrypt.hash(password, salt);
-  const user = await this.create({ email, username, password: hashedPassword });
+  const user = await this.create({
+    fullname,
+    username,
+    email,
+    password: hashedPassword,
+    role,
+  });
   return user;
 };
 UserSchema.statics.login = async function (email, password) {

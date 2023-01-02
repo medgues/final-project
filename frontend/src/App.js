@@ -13,13 +13,15 @@ import UserPage from "./pages/UserPage";
 import CreateProduct from "./pages/CreateProduct";
 import ProfilePage from "./pages/ProfilePage";
 import EditProduct from "./pages/EditProduct";
+import CheckoutPage from "./pages/CheckoutPage";
+import TestHome from "./pages/TestHome.js/TestHome";
 
 function App() {
   return (
     <Router>
       {/* Routes to different pages */}
       <Routes>
-        {/* <Route exact path="/" element={<Home />}></Route> */}
+        {/* <Route exact path="/" element={<TestHome />}></Route> */}
         <Route exact path="/" element={<Home />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/Signup" element={<Signup />}></Route>
@@ -27,6 +29,7 @@ function App() {
         <Route path="/createproduct" element={<CreateProduct />} />{" "}
         <Route path="/:username" element={<ProfilePage />} />{" "}
         <Route path="/product/edit/:id" element={<EditProduct />} />{" "}
+        <Route path="/checkout" element={<CheckoutPage />} />{" "}
         {/* <Route path="/upload" element={<Upload />} />{" "} */}
         {/* :id is a placeholder for the id of the product */}
         {/* <Route path="/checkout" element={<Checkout />} /> */}

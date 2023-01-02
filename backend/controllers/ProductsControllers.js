@@ -24,8 +24,8 @@ const getAndCheckOwnership = async (id, user_username) => {
 const getProducts = async (req, res) => {
   try {
     //get all products from data base
-    const allProducts = await ProductsModel.find({});
-    res.status(200).json(allProducts);
+    const products = await ProductsModel.find({});
+    res.status(200).json(products);
   } catch (err) {
     res.status(400).json({ err: err.message });
   }
@@ -58,13 +58,17 @@ const getProductbyId = async (req, res) => {
 };
 //create product
 const createProduct = async (req, res) => {
-  const { title, postedBy, img } = req.body;
+  const { title, postedBy, img, description } = req.body;
   const { username } = req.user;
+  const bg_img =
+    "https://mega.nz/file/JfJgybKD#9R4C0b3yTtOijf_WL-xWSrN8Vq4NwZuhgRCFG_T7Bc8";
   try {
     const newProduct = await ProductsModel.create({
       title,
       postedBy: username,
+      description,
       img,
+      bg_img,
     });
     res.status(200).json({ newProduct });
   } catch (err) {

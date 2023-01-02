@@ -11,7 +11,15 @@ const ProductSchema = new Schema(
       type: String,
       required: true,
     },
+    description: {
+      type: String,
+      required: true,
+    },
     img: {
+      type: String,
+      require: true,
+    },
+    bg_img: {
       type: String,
       require: true,
     },

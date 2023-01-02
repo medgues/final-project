@@ -4,12 +4,13 @@ import { useNavigate, Link } from "react-router-dom";
 import { useLogout } from "../hooks/useLogout";
 import { Auth } from "../contexts/Auth";
 import { ProductsContext } from "../contexts/ProductsContext";
+import { CardContext } from "../contexts/CardContext";
 
 function MainHeader() {
-  // const [{ user, basket }, dispatch] = useStateValue();
-  // const user = JSON.parse(localStorage.getItem("user"));
   const { user } = useContext(Auth);
-
+  const { state } = useContext(CardContext);
+  console.log("card from header", state, user);
+  const cardStyle = state ? `bg-red-600` : "";
   const { logOut } = useLogout();
 
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ function MainHeader() {
   };
 
   return (
-    <header className=" bg-blue-400 header">
+    <header className="Header relative bg-blue-400 ">
       <div className="navbar bg-base-100">
         <div className="flex-1">
           <Link to={"/"} className="btn btn-ghost normal-case text-xl">
@@ -60,25 +61,44 @@ function MainHeader() {
                       d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                     />
                   </svg>
-                  <span className="badge badge-sm indicator-item">8</span>
+                  {state ? (
+                    state.length === 0 ? (
+                      <></>
+                    ) : (
+                      <span
+                        className={`badge border-0 badge-sm indicator-item ${cardStyle}`}
+                      >
+                        {state.length}
+                      </span>
+                    )
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </label>
               <div
                 tabIndex={0}
-                className="mt-3 card card-compact dropdown-content w-52 bg-base-100 shadow"
+                className="mt-3 w-10vw rounded-lg card-compact dropdown-content bg-base-100 shadow z-[1001]"
               >
                 <div className="card-body">
-                  <span className="font-bold text-lg">8 Items</span>
-                  <span className="text-info">Subtotal: $999</span>
+                  <span className="font-bold text-lg">
+                    {state ? state.length : 0} Items
+                  </span>
+                  <span className="text-info">
+                    Subtotal: ${state ? 200 * state.length : 0}
+                  </span>
                   <div className="card-actions">
-                    <button className="btn btn-primary btn-block">
+                    <button
+                      onClick={() => navigate("/checkout")}
+                      className="btn btn-primary btn-block"
+                    >
                       View cart
                     </button>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="dropdown dropdown-end">
+            <div className="dropdown dropdown-end z-[1001]">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 rounded-full">
                   <img src="https://placeimg.com/80/80/people" />

@@ -10,6 +10,7 @@ import useProducts from "../hooks/useProducts";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import MainHeader from "../components/MainHeader";
 import ProductsGrid from "../components/Grid";
+import ProfileSection from "../components/ProfileSection";
 
 const UserPage = () => {
   const [data, setData] = useState([]);
@@ -30,6 +31,7 @@ const UserPage = () => {
       <MainHeader />
 
       <div className="w-11/12 mx-auto my-1">
+        {/* <ProfileSection /> */}
         <ProductsGrid data={data} />
         {/* <ResponsiveMasonry columnsCountBreakPoints={{ 350: 2, 750: 4, 900: 5 }}>
           <Masonry gutter="10px">

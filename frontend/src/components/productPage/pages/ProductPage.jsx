@@ -55,10 +55,10 @@ const ProductPage = ({ data, toggle }) => {
   }
 
   // for responsive behaviour
-  const changeHeight = () => {
+  const changeHeight = (shoeBackground) => {
     var x = window.matchMedia("(max-width:1000px)");
 
-    !shoes ? (shoeHeight = 0) : (shoeHeight = shoes[0].offsetHeight);
+    !shoes ? (shoeHeight = 0) : (shoeHeight = 0);
 
     if (x.matches) {
       if (shoeHeight === 0) {
@@ -74,17 +74,16 @@ const ProductPage = ({ data, toggle }) => {
       shoeBackground.style.height = "475px";
     }
   };
+  sizes = document.querySelectorAll(".size");
+  colors = document.querySelectorAll(".color");
+  shoes = document.querySelectorAll(".shoe");
+  gradients = document.querySelectorAll(".gradient");
+  shoeBackground = document.querySelector(".shoeBackground");
 
   useEffect(() => {
-    sizes = document.querySelectorAll(".size");
-    colors = document.querySelectorAll(".color");
-    shoes = document.querySelectorAll(".shoe");
-    gradients = document.querySelectorAll(".gradient");
-    shoeBackground = document.querySelector(".shoeBackground");
-
     colors.forEach((color) => color.addEventListener("click", changeColor));
     sizes.forEach((size) => size.addEventListener("click", changeSize));
-    changeHeight();
+    changeHeight(shoeBackground);
   }, []);
   window.addEventListener("resize", changeHeight);
 
@@ -104,7 +103,7 @@ const ProductPage = ({ data, toggle }) => {
               ✕
             </label>
 
-            <ProductImages />
+            <ProductImages data={data} />
           </div>
           <Info data={data} />
         </div>

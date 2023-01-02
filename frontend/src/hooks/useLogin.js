@@ -16,6 +16,7 @@ export const useLogin = () => {
     const res = await axios.post(url, data);
     if (res.status === 200) {
       localStorage.setItem("user", JSON.stringify(res.data));
+      console.log("res res", res);
       dispatch({ type: "LOGIN", payload: res.data });
       navigate("/");
     }

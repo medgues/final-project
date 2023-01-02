@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { CardContext } from "../../../../contexts/CardContext";
 
 const Info = ({ data }) => {
   const shoeName = (
@@ -14,10 +15,7 @@ const Info = ({ data }) => {
   const description = (
     <div className="description">
       <h3 className="title">Product Info</h3>
-      <p className="text">
-        Ensure a comfortable running session by wearing this pair of cool
-        running shoes from Nike.
-      </p>
+      <p className="text">{data.description}</p>
     </div>
   );
   const KindTaps = (
@@ -50,11 +48,22 @@ const Info = ({ data }) => {
       </div>
     </div>
   );
-
+  const { dispatch } = useContext(CardContext);
+  const addToBasket = () => {
+    dispatch({
+      type: "ADD_TO_CARD",
+      item: {
+        id: data._id,
+        title: data.title,
+        image: data.img,
+      },
+    });
+  };
   const BuySection = (
     <div className="buy-price">
       <a href="/#" className="buy">
-        <i className="fas fa-shopping-cart"></i>Add to card
+        <i className="fas fa-shopping-cart" onClick={addToBasket}></i>Add to
+        card
       </a>
       <div className="price">
         <i className="fas fa-dollar-sign"></i>

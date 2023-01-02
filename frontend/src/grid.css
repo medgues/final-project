@@ -69,7 +69,7 @@ body,
 }
 
 .circle {
-  z-index: 1;
+  z-index: 2;
   position: absolute;
   top: calc(50% - 140px);
   left: calc(50% - 140px);
@@ -77,4 +77,24 @@ body,
   height: 280px;
   border-radius: 50%;
   box-shadow: 0px 20px 60px -10px rgba(0, 0, 0, 0.2);
+}
+.showCard {
+  top: 35%;
+  z-index: 1;
+  position: absolute;
+  /* top: calc(50% - 140px);
+  left: calc(50% - 140px);
+  width: 280px;
+  height: 280px;
+  border-radius: 50%; */
+}
+
+.cardDiv {
+  position: absolute;
+  background-color: aqua;
+  border: 1px solid black;
+  top: 40%;
+  left: 50%;
+  /* width: 10px;
+  height: 10px; */
 }

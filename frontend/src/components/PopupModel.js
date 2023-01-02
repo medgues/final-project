@@ -3,6 +3,7 @@ import { Auth } from "../contexts/Auth";
 import { ProductsContext } from "../contexts/ProductsContext";
 import { useFetch } from "../hooks/useFetch";
 import useProducts from "../hooks/useProducts";
+import bg from "../../src/assets/shirt.svg";
 
 export default function PopupModel({ product, showModal, setShowModal }) {
   const { fetch } = useFetch();
@@ -43,12 +44,18 @@ export default function PopupModel({ product, showModal, setShowModal }) {
                   </p>
 
                   <div className="relative hover:cursor-pointer flex flex-row items-center h-auto sm:w-2/3 w-1/2 bg-slate-300 m-2 rounded-md">
-                    <img
-                      src={product.image}
-                      alt=""
-                      className=" w-full h-44 object-cover overflow-hidden rounded-md"
-                    />
-
+                    <div className="relative">
+                      <img
+                        src={product.img}
+                        alt=""
+                        className=" top-10 absolute scale-40"
+                      />
+                      <img
+                        src={bg}
+                        alt=""
+                        className=" w-full h-44 object-cover overflow-hidden rounded-md"
+                      />
+                    </div>
                     <div className="flex w-full  justify-start">
                       <div className=" p-2 h-fit self-start">
                         <p>{product.title}</p>

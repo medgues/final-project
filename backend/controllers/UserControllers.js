@@ -13,22 +13,43 @@ const login = async (req, res) => {
 
   try {
     const user = await UserModel.login(email, password);
+    console.log("usre", user);
     //Create jwt
     const token = generateToken(user._id);
-    res.status(200).json({ username: user.username, email: user.email, token });
+    res.status(200).json({
+      username: user.username,
+      fullname: user.fullname,
+      role: user.role,
+      email: user.email,
+      likes: user.likes,
+      token,
+    });
   } catch (err) {
     res.status(400).json({ err: err.message });
   }
 };
 
 const signup = async (req, res) => {
-  const { email, password, role, username } = req.body;
+  const { fullname, username, email, password, role } = req.body;
   console.log(req.body);
   try {
-    const user = await UserModel.signup(email, password, role, username);
+    const user = await UserModel.signup(
+      fullname,
+      username,
+      email,
+      password,
+      role
+    );
     //Create jwt
     const token = generateToken(user._id);
-    res.status(200).json({ username: user.username, email: user.email, token });
+    res.status(200).json({
+      username: user.username,
+      fullname: user.fullname,
+      role: user.role,
+      email: user.email,
+      likes: user.likes,
+      token,
+    });
   } catch (err) {
     res.status(400).json({ err: err.message });
   }

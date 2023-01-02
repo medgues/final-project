@@ -6,6 +6,8 @@ import useProducts from "../hooks/useProducts";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import MainHeader from "../components/MainHeader";
 import ProductsGrid from "../components/Grid";
+import ProfileSection from "../components/ProfileSection";
+import { Auth } from "../contexts/Auth";
 
 const ProfilePage = () => {
   const [data, setData] = useState([]);
@@ -20,15 +22,14 @@ const ProfilePage = () => {
     setData(products);
   }, [products]);
   const disactivateToggleIsTrue = user.username === username;
-  console.log(disactivateToggleIsTrue);
   useEffect(() => {
     const url = `/api/products/${username}`;
     const method = "getProfile";
     fetchData({ url, method, user, data: {} });
   }, []);
 
-  const handelPopUpOpen = ({ postedBy, image, title, id }) => {
-    setProduct({ postedBy, image, title, id });
+  const handelPopUpOpen = ({ postedBy, img, bg_img, title, id }) => {
+    setProduct({ postedBy, img, bg_img, title, id });
     setShowModal(true);
   };
 
@@ -36,6 +37,7 @@ const ProfilePage = () => {
     <div className=" min-h-screen  bg-slate-300">
       <MainHeader />
       <div className="w-11/12  mx-auto my-1">
+        <ProfileSection user={user} />
         <ProductsGrid
           data={data}
           disactivateToggleIsTrue={disactivateToggleIsTrue}

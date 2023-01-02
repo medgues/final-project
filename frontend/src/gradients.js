@@ -1,7 +1,9 @@
 // Gradients taken from: https://webgradients.com/
 export default [
   {
+    description: "#a8edea → #fed6e3",
     css: "linear-gradient(to top, #a8edea 0%, #fed6e3 100%)",
+    height: 200,
   },
   {
     name: "Saint Petersburg",
